@@ -7,16 +7,22 @@
     </head>
 
     <body>
+        <div class="columns">
+            <br><br>
+            <!--empty div-->
+        </div>
         <div class="columns is-mobile is-centered">
             <div class="column is-half">
-                <h1>Inspirational Quotes</h1>
-                <button id="showCreateButton" onclick="showCreate()">Create a quote</button>
+                <h1 class="title is-1">Inspirational Quotes</h1>
+                <div class="buttons"></div>
+                    <button class="button is-warning" id="showCreateButton" onclick="showCreate()">Create a quote</button>
+                </div>
             </div>
           </div>
         
         <div> </div>
         <div>
-            <table class="table" id="quoteTable">
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth" id="quoteTable">
                 <tr>
                         <th>id</th>
                         <th>Quote</th>
@@ -115,9 +121,9 @@
         //var cell4 = rowElement.insertCell(3);
         //cell4.innerHTML = book.price
         var cell5 = rowElement.insertCell(3);
-        cell5.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
+        cell5.innerHTML = '<button class="button is-success" onclick="showUpdate(this)">Update</button>'
         var cell5 = rowElement.insertCell(4);
-        cell5.innerHTML = '<button onclick=doDelete(this)>delete</button>'
+        cell5.innerHTML = '<button class="button is-danger" onclick=doDelete(this)>delete</button>'
 
     }
 
