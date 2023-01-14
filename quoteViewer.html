@@ -2,12 +2,19 @@
     <head>
         <title> view Quotes</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-       
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
     </head>
+
     <body>
-        <h1>Quotes</h1>
-        <div> <button id="showCreateButton" onclick="showCreate()">Create</button></div>
+        <div class="columns is-mobile is-centered">
+            <div class="column is-half">
+                <h1>Inspirational Quotes</h1>
+                <button id="showCreateButton" onclick="showCreate()">Create a quote</button>
+            </div>
+          </div>
+        
+        <div> </div>
         <div>
             <table class="table" id="quoteTable">
                 <tr>
