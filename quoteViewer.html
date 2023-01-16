@@ -14,13 +14,24 @@
         <div class="columns is-mobile is-centered">
             <div class="column is-half">
                 <h1 class="title is-1">Inspirational Quotes</h1>
-                <div class="buttons"></div>
+                <div class="buttons">
                     <button class="button is-warning" id="showCreateButton" onclick="showCreate()">Create a quote</button>
                 </div>
+                <p>Below, choose from an inspirational quote to inspire you.<br/></p>
+                <p>Whether it be <a href="https://en.wikipedia.org/wiki/Gary_Coleman" target="_blank" rel="noopener">Arnold</a> from Diff'rent Strokes, or
+                <a href="https://marvel.fandom.com/wiki/Emil_Blonsky_(Earth-616)"  target="_blank" rel="noopener"> Emil Blonsky</a> from the Marvel Cinematic Universe, or
+                perhaps a scientist or renowned author - there's something for everyone.</p>
+                <br/>
+                <p>Perhap, you are a modern-day Socrates? (So many people are!).<br/>
+                    Click on the 'Create a quote' button and let your wisdom spring forth!
+                </p>
             </div>
-          </div>
+                
+        </div>
         
-        <div> </div>
+
+
+
         <div>
             <table class="table is-bordered is-striped is-hoverable is-fullwidth" id="quoteTable">
                 <tr>
@@ -36,13 +47,18 @@
             </table>
         </div>
         <div id='createUpdateForm' style="display: none">
-                <h2><span id="createLabel">Create a</span> <span id="updateLabel">update</span> Quote</h2>
+                <h2 class="title is-2"><span id="createLabel">Create a</span> <span id="updateLabel">Update the </span> Quote below</h2>
                 <input type="hidden" name="id"/>
-                Quote <input type="text" name="quote" /><br/>
-                Author <input type="text" name="author"/> <br/>
+                <h4 class="title is-4">Quote</h4> <input class="input" type="text" name="quote" /><br/>
+                <br/>
+                <h4 class="title is-4">Author</h4> <input class="input" type="text" name="author"/> <br/>
+                <br/>
                 <span><button id="doCreateButton" onclick="doCreate()">Create</button></span>
-                <span><button id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+                <span><button class="button is-success" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
         </div>
+    
+    
+    
     </body>
     <script>
     function showCreate(){
