@@ -53,7 +53,21 @@ This is the code for the server to run.
 The curl commands have been left in, but commented out.
 
 
-
+## Python Anywhere Installation:
+[Python Anywhere](https://www.pythonanywhere.com/) is a service that allows users to run their (small) Python projects for free.<br>
+The recommended way is to clone a github repository, and then use the in-built bash console to edit any files as necessary, i.e *db.config*.<br>
+This was the order in which it was done:
+1. Sign up for a python anywhere account (a free account)
+2. Clone the github repository (this one)
+3. Note that pythonanywhere automatically adds the prefix *user_name* + "$" before the database name - the database can be created via the graphical tool to avoid any issues.
+4. edit *dbconfig.py* using [Vim](http://vimsheet.com/)
+5. Create the table by typing *python createQuoteTable.py* at the bash prompt
+6. Navigate to *Databases* and open a MySQL console (choose the one with the database name you created)
+7. type "SHOW DATABASES"; and hit enter to verify the database is there
+8. type "USE database_name" where database_name is the name of the database that you created
+9. type "SHOW tables"; to verify that a table named 'quote' was created
+10. Run: *python final_scraper.py* in the bash console
+11. Go back to the mysql console and type: "SELECT * FROM quote"; to verify the scraper populated the database.
 
 
 ### References
@@ -64,7 +78,7 @@ The curl commands have been left in, but commented out.
 4. [MySQL connector errors](https://stackoverflow.com/questions/63689559/mysql-connector-errors-programmingerror-not-enough-parameters-for-the-sql-state)<br>
 5. [Pandas DataFrame to SQL](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html)<br>
 6. [Flask installation instructions](https://flask.palletsprojects.com/en/1.1.x/installation/)<br>
- []()<br>
+7. [Python Anywhere](https://help.pythonanywhere.com/pages/UploadingAndDownloadingFiles)<br>
  []()<br>
  []()<br>
  []()<br>
