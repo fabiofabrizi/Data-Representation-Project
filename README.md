@@ -68,6 +68,11 @@ This was the order in which it was done:
 9. type "SHOW tables"; to verify that a table named 'quote' was created
 10. Run: *python final_scraper.py* in the bash console
 11. Go back to the mysql console and type: "SELECT * FROM quote"; to verify the scraper populated the database.
+12. Follow instructions on python anywhere to host the site, but these are the important bits:
+    - reference the file that calls Flask from the wsgi file.
+    - erase the localhost references (127.0.0.1:5000) from the html file - otherwise, no quotes will be displayed.
+
+[Here is the project hosted on pythonanywhere](http://irishfab.pythonanywhere.com/quoteViewer.html)
 
 
 ### References
