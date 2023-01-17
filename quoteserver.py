@@ -1,13 +1,45 @@
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, render_template
+# Import library for authentication
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import generate_password_hash, check_password_hash
+# Import Database Access Objec and rowCounter for random number generation
 from quoteDAO import quoteDAO
+import rowCounter as rc
 
-app = Flask(__name__, static_url_path='', static_folder='.')
+app = Flask(__name__, static_url_path='/quoteViewer.html', static_folder='.')
+
+
+### Testing Authentication
+basicAuth = HTTPBasicAuth()
+users = {
+"user1": generate_password_hash("pass1"),
+"andy1": generate_password_hash("pass2")
+}
+@basicAuth.verify_password
+def verify_password(username, password):
+    if username in users and \
+    check_password_hash(users.get(username), password):
+        return username
+@app.route('/')
+@basicAuth.login_required
+def index():
+    return render_template('quoteViewer.html')
+    return "Hello, %s!" % basicAuth.current_user()
+
+
+
+
+## End Authentication testing
 
 #app = Flask(__name__)
 
 #@app.route('/')
 #def index():
 #    return "Hello, World!"
+
+# Testing random quote
+
+# 
 
 # Gives all quotes
 #curl "http://127.0.0.1:5000/quotes"
@@ -16,6 +48,12 @@ def getAll():
     #print("in getall")
     results = quoteDAO.getAll()
     return jsonify(results)
+
+# Gives a random quote by id
+@app.route('/quotes/<int:id>')
+def getRandQuote(rc):
+    randQuote = quoteDAO.getRandQuote(rc)
+    return jsonify(randQuote)
 
 # Gives quote with id of 1
 #curl "http://127.0.0.1:5000/quotes/1"
