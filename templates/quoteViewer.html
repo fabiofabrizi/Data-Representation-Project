@@ -1,0 +1,263 @@
+<html>
+    <head>
+        <title> view Quotes</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+    </head>
+
+    <body>
+        <div class="columns">
+            <br><br>
+            <!--empty div-->
+        </div>
+        <div class="columns is-mobile is-centered">
+            <div class="column is-half">
+                <h1 class="title is-1">Inspirational Quotes</h1>
+                <div class="buttons">
+                    <button class="button is-warning" id="showCreateButton" onclick="showCreate()">Create a quote</button>
+                </div>
+                <p>Below, choose from an inspirational quote to inspire you.<br/></p>
+                <p>Whether it be <a href="https://en.wikipedia.org/wiki/Gary_Coleman" target="_blank" rel="noopener">Arnold</a> from Diff'rent Strokes, or
+                <a href="https://marvel.fandom.com/wiki/Emil_Blonsky_(Earth-616)"  target="_blank" rel="noopener"> Emil Blonsky</a> from the Marvel Cinematic Universe, or
+                perhaps a scientist or renowned author - there's something for everyone.</p>
+                <br/>
+                <p>Perhap, you are a modern-day Socrates? (So many people are!).<br/>
+                    Click on the 'Create a quote' button and let your wisdom spring forth!
+                </p>
+            </div>
+                
+        </div>
+        
+
+
+
+        <div>
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth" id="quoteTable">
+                <tr>
+                        <th>id</th>
+                        <th>Quote</th>
+                        <th>
+                            Author
+                        </th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                </tr>
+                
+            </table>
+        </div>
+        <div id='createUpdateForm' style="display: none">
+                <h2 class="title is-2"><span id="createLabel">Create a</span> <span id="updateLabel">Update the </span> Quote below</h2>
+                <input type="hidden" name="id"/>
+                <h4 class="title is-4">Quote</h4> <input class="input" type="text" name="quote" /><br/>
+                <br/>
+                <h4 class="title is-4">Author</h4> <input class="input" type="text" name="author"/> <br/>
+                <br/>
+                <span><button class="button is-success" id="doCreateButton" onclick="doCreate()">Create</button></span>
+                <span><button class="button is-success" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+        </div>
+    
+    
+    
+    </body>
+    <script>
+    function showCreate(){
+        document.getElementById('showCreateButton').style.display="none"
+        document.getElementById('quoteTable').style.display="none"
+        document.getElementById('createUpdateForm').style.display="block"
+
+        document.getElementById('createLabel').style.display="inline"
+        document.getElementById('updateLabel').style.display="none"
+
+        document.getElementById('doCreateButton').style.display="block"
+        document.getElementById('doUpdateButton').style.display="none"
+
+    }
+    function showViewAll(){
+        document.getElementById('showCreateButton').style.display="block"
+        document.getElementById('quoteTable').style.display="block"
+        document.getElementById('createUpdateForm').style.display="none"
+    }
+    function showUpdate(buttonElement){
+        document.getElementById('showCreateButton').style.display="none"
+        document.getElementById('quoteTable').style.display="none"
+        document.getElementById('createUpdateForm').style.display="block"
+
+        document.getElementById('createLabel').style.display="none"
+        document.getElementById('updateLabel').style.display="inline"
+
+        document.getElementById('doCreateButton').style.display="none"
+        document.getElementById('doUpdateButton').style.display="block"
+
+
+        var rowElement = buttonElement.parentNode.parentNode
+        // these is a way of finding the closest <tr> which would safer, closest()
+        
+        var quote = getQuoteFromRow(rowElement)
+        populateFormWithQuote(quote)
+    }
+    function doCreate(){
+        var form = document.getElementById('createUpdateForm')
+
+        var quote = {}
+       
+        quote.quote = form.querySelector('input[name="quote"]').value
+        quote.author = form.querySelector('input[name="author"]').value
+        console.log(JSON.stringify(quote))
+        createQuoteAjax(quote)
+        
+        
+    }
+    function doUpdate(){
+        var quote = getQuoteFromForm();
+        var rowElement = document.getElementById(quote.id);
+        updateQuoteAjax(quote);
+        setQuoteInRow(rowElement,quote);
+       
+        clearForm();
+        showViewAll();
+    }
+    function doDelete(r){
+        var tableElement = document.getElementById('quoteTable');
+        var rowElement = r.parentNode.parentNode;
+        var index = rowElement.rowIndex;
+        deleteQuoteAjax(rowElement.getAttribute("id"));
+        tableElement.deleteRow(index);
+    }
+    function addQuoteToTable(quote){
+        var tableElement = document.getElementById('quoteTable')
+        var rowElement = tableElement.insertRow(-1)
+        rowElement.setAttribute('id',quote.id)
+        var cell1 = rowElement.insertCell(0);
+        cell1.innerHTML = quote.id
+        var cell2 = rowElement.insertCell(1);
+        cell2.innerHTML = quote.quote
+        var cell3 = rowElement.insertCell(2);
+        cell3.innerHTML = quote.author
+        //var cell4 = rowElement.insertCell(3);
+        //cell4.innerHTML = book.price
+        var cell5 = rowElement.insertCell(3);
+        cell5.innerHTML = '<button class="button is-success" onclick="showUpdate(this)">Update</button>'
+        var cell5 = rowElement.insertCell(4);
+        cell5.innerHTML = '<button class="button is-danger" onclick=doDelete(this)>delete</button>'
+
+    }
+
+    function clearForm(){
+        var form = document.getElementById('createUpdateForm')
+
+        form.querySelector('input[name="quote"]').value=''
+        form.querySelector('input[name="author"]').value=''
+    }
+    function getQuoteFromRow(rowElement){
+        var car ={}
+        quote.id  = rowElement.getAttribute('id')
+        quote.quote = rowElement.cells[1].firstChild.textContent
+        quote.author = rowElement.cells[2].firstChild.textContent
+        return quote
+    }
+    function setQuoteInRow(rowElement, quote){
+        rowElement.cells[0].firstChild.textContent= quote.id  
+        rowElement.cells[1].firstChild.textContent= quote.quote 
+        rowElement.cells[2].firstChild.textContent= quote.author
+    }
+    function populateFormWithQuote(quote){
+        var form = document.getElementById('createUpdateForm')
+        form.querySelector('input[name="id"]').disabled = true
+
+        form.querySelector('input[name="id"]').value  = quote.id
+        form.querySelector('input[name="quote"]').value= quote.quote
+        form.querySelector('input[name="author"]').value= quote.author
+        return quote
+    }
+    function getQuoteFromForm(){
+        var form = document.getElementById('createUpdateForm')
+        var quote = {}
+        quote.id = form.querySelector('input[name="id"]').value
+        quote.quote = form.querySelector('input[name="quote"]').value
+        quote.author = form.querySelector('input[name="author"]').value
+        console.log(JSON.stringify(quote))
+        return quote
+    }
+    function getAllAjax(){
+        $.ajax({
+            "url": "http://127.0.0.1:5000/quotes",
+            "method":"GET",
+            "data":"",
+            "dataType": "JSON",
+            "success":function(result){
+                //console.log(result);
+                for (quote of result){
+                    addQuoteToTable(quote);
+                }
+                
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+
+    }
+    function createQuoteAjax(quote){
+        //var car = {"reg":"12 D 1234","make":"Fiat","model":"Punto","price":3000}
+        console.log(JSON.stringify(quote));
+        $.ajax({
+            "url": "http://127.0.0.1:5000/quotes",
+            "method":"POST",
+            "data":JSON.stringify(quote),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success":function(result){
+                //console.log(result);
+                quote.id = result.id
+                addQuoteToTable(quote)
+                clearForm()
+                showViewAll()
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+    }
+    function updateQuoteAjax(quote){
+        //var car = {"reg":"12 D 1234","price":8000}
+        console.log(JSON.stringify(quote));
+        $.ajax({
+            "url": "http://127.0.0.1:5000/quotes/"+encodeURI(quote.id),
+            "method":"PUT",
+            "data":JSON.stringify(quote),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success":function(result){
+               // console.log(result);
+                  
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+    }
+    function deleteQuoteAjax(id){
+        
+        //console.log(JSON.stringify('deleting '+id));
+        $.ajax({
+            "url": "http://127.0.0.1:5000/quotes/"+encodeURI(id),
+            "method":"DELETE",
+            "data":"",
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success":function(result){
+                //console.log(result);
+                  
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+    }
+    getAllAjax();
+  
+
+    
+    </script>
+</html>
