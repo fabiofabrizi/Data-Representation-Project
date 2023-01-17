@@ -72,7 +72,11 @@ This was the order in which it was done:
     - reference the file that calls Flask from the wsgi file.
     - erase the localhost references (127.0.0.1:5000) from the html file - otherwise, no quotes will be displayed.
 
-[Here is the project hosted on pythonanywhere](http://irishfab.pythonanywhere.com/quoteViewer.html)
+[Here is the project hosted on pythonanywhere](http://irishfab.pythonanywhere.com/)
+
+### Login details
+user: andy1
+password: pass2
 
 
 ### References
