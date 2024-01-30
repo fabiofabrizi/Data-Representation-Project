@@ -1,8 +1,6 @@
 [![My Skills](https://skillicons.dev/icons?i=python,mysql,flask&theme=light)](https://skillicons.dev)
 </i>
 
-
-
 # Data-Representation-Project
 The project for the Data Representation module at ATU.<br>
 
