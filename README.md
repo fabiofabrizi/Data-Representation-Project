@@ -81,6 +81,7 @@ This was the order in which it was done:
 user: andy1
 password: pass2
 
+## NB: The project is currently taken off line
 
 ### References
 
